@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: delivery-stage
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mrsddq/terraform-gitops-delivery-platform.git
+    targetRevision: main
+    path: kubernetes/overlays/stage
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: delivery-stage
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
