@@ -1,5 +1,7 @@
 # Terraform GitOps Delivery Platform
 
+[![CI](https://github.com/mrsddq/terraform-gitops-delivery-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/mrsddq/terraform-gitops-delivery-platform/actions/workflows/ci.yml)
+
 Multi-environment infrastructure delivery platform that shows how Terraform, GitHub Actions, policy checks, and Argo CD fit together in a real DevOps workflow.
 
 ## What This Builds
@@ -45,6 +47,10 @@ tests/                    Static quality checks
 ```bash
 make validate
 ```
+
+## Portfolio Evidence
+
+See [docs/PORTFOLIO_EVIDENCE.md](docs/PORTFOLIO_EVIDENCE.md) for validation commands, sample plan-comment output, and review proof points.
 
 For Terraform formatting:
 
