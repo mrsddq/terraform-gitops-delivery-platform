@@ -52,6 +52,28 @@ make validate
 
 See [docs/PORTFOLIO_EVIDENCE.md](docs/PORTFOLIO_EVIDENCE.md) for validation commands, sample plan-comment output, and review proof points.
 
+## Production Docs
+
+- [Architecture](docs/architecture.md)
+- [Runbook](docs/runbook.md)
+- [Incident response](docs/incident-response.md)
+- [Cost estimate](docs/cost-estimate.md)
+- [Security controls](docs/security-controls.md)
+
+## Make Targets
+
+```bash
+make test
+make lint
+make security-scan
+make deploy ENV=dev CONFIRM_DEPLOY=true
+make destroy ENV=dev CONFIRM_DEPLOY=true
+```
+
+## Interview Story
+
+This project demonstrates multi-environment Terraform delivery with CI validation, policy-as-code, plan review, environment overlays, GitOps promotion and production-style rollback discipline.
+
 For Terraform formatting:
 
 ```bash

@@ -34,3 +34,14 @@ Sample plan-comment output:
 | Policies | `policies/opa/terraform.rego` | Policy-as-code guardrail examples. |
 | GitOps overlays | `kubernetes/overlays/` | Environment promotion through Kustomize. |
 | Argo CD apps | `argocd/applications/` | GitOps reconciliation per environment. |
+
+## Screenshots And Proof To Capture
+
+- GitHub Actions CI run with Terraform format and Checkov steps.
+- Sample plan-comment markdown from `scripts/render_plan_comment.py`.
+- `terraform plan` output for `dev` in a sandbox account.
+- Argo CD dev/stage/prod applications.
+- OPA policy review output once connected to real plan JSON.
+- Pull request showing plan review and approval flow.
+
+Do not present this as production automation unless applies are protected by real environment approvals.
