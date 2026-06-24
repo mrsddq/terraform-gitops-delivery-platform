@@ -65,6 +65,7 @@ See [docs/PORTFOLIO_EVIDENCE.md](docs/PORTFOLIO_EVIDENCE.md) for validation comm
 ```bash
 make test
 make lint
+make local-demo ENV=dev
 make security-scan
 make deploy ENV=dev CONFIRM_DEPLOY=true
 make destroy ENV=dev CONFIRM_DEPLOY=true
@@ -90,4 +91,4 @@ make fmt-check
 
 ## Safe Demo Mode
 
-The included CI checks do not require cloud credentials. Real plans should run in protected GitHub environments with OIDC-based AWS authentication.
+The included CI checks do not require cloud credentials. `make local-demo ENV=dev` validates the Terraform, Kustomize and Argo CD wiring for an environment without creating infrastructure. Real plans should run in protected GitHub environments with OIDC-based AWS authentication.

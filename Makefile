@@ -1,9 +1,9 @@
-.PHONY: validate fmt-check lint security-scan deploy destroy test sample-plan-comment
+.PHONY: validate fmt-check lint security-scan deploy destroy local-demo test sample-plan-comment
 
 ENV ?= dev
 CONFIRM_DEPLOY ?= false
 
-validate: test sample-plan-comment
+validate: test sample-plan-comment local-demo
 
 fmt-check:
 	terraform fmt -recursive -check terraform
@@ -21,6 +21,9 @@ deploy:
 destroy:
 	@if [ "$(CONFIRM_DEPLOY)" != "true" ]; then echo "Set CONFIRM_DEPLOY=true to destroy AWS resources."; exit 2; fi
 	terraform -chdir=terraform/envs/$(ENV) destroy
+
+local-demo:
+	python scripts/validate_gitops_layout.py --env $(ENV)
 
 test:
 	python -m unittest discover -s tests
