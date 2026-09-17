@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -16,6 +19,8 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
       - name: Terraform format
         run: terraform fmt -recursive -check terraform
+      - name: Install validation dependencies
+        run: python -m pip install -r requirements-dev.txt
       - name: Static tests
         run: make validate
 

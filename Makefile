@@ -3,7 +3,8 @@
 ENV ?= dev
 CONFIRM_DEPLOY ?= false
 
-validate: test sample-plan-comment local-demo
+validate: test sample-plan-comment
+	python scripts/validate_gitops_layout.py --env all
 
 fmt-check:
 	terraform fmt -recursive -check terraform
