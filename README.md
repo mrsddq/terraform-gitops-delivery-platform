@@ -2,19 +2,21 @@
 
 [![CI](https://github.com/mrsddq/terraform-gitops-delivery-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/mrsddq/terraform-gitops-delivery-platform/actions/workflows/ci.yml)
 
-Multi-environment infrastructure delivery platform that shows how Terraform, GitHub Actions, policy checks, and Argo CD fit together in a real DevOps workflow.
+A cloud-independent reference for multi-environment Terraform and GitOps delivery. CI validates configuration and plan-summary behavior; it does not provision infrastructure or claim production deployment.
 
 ## What This Builds
 
 - `dev`, `stage`, and `prod` Terraform environments
 - Reusable Terraform modules for network and application platform primitives
 - Remote-state backend example with locking
-- Pull request workflow for Terraform formatting, validation, plan summary, and security scans
+- Pull request workflow for Terraform formatting, structured GitOps checks, plan-summary regression tests, and advisory Checkov scans
 - OPA policy examples for risky infrastructure changes
 - Kustomize overlays for Kubernetes deployment promotion
 - Argo CD Applications for environment-specific reconciliation
 
-## Delivery Flow
+## Reference Delivery Flow
+
+The diagram includes future cloud-authenticated plan/apply and OPA integration. Current CI runs formatting, local tests, all-environment routing checks, and an advisory Checkov scan; it does not run Terraform plans or OPA enforcement.
 
 ```mermaid
 flowchart LR
@@ -45,6 +47,7 @@ tests/                    Static quality checks
 ## Local Validation
 
 ```bash
+python -m pip install -r requirements-dev.txt
 make validate
 ```
 
@@ -92,3 +95,15 @@ make fmt-check
 ## Safe Demo Mode
 
 The included CI checks do not require cloud credentials. `make local-demo ENV=dev` validates the Terraform, Kustomize and Argo CD wiring for an environment without creating infrastructure. Real plans should run in protected GitHub environments with OIDC-based AWS authentication.
+
+## Validation boundaries
+
+`make validate` parses YAML for every environment and rejects mismatched namespaces, incorrect repositories or overlay paths, and production automatic sync. Tests deliberately corrupt these settings to prove the checks fail. Production manual sync is a configuration default; GitHub/Argo CD approval permissions still require external setup.
+
+The plan-summary CLI handles reads and both replacement orders, and exits with status 2 on malformed or unknown action sequences instead of displaying a misleading zero-change result. Feed it `terraform show -json plan.bin`; never commit a plan file because it can contain sensitive values.
+
+```bash
+terraform show -json plan.bin | python scripts/render_plan_comment.py
+```
+
+These checks do not validate provider behavior, render Kustomize, enforce OPA, or prove a running cluster. OPA files are examples pending integration; Checkov findings remain advisory.

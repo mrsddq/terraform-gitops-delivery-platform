@@ -5,9 +5,10 @@ This repo demonstrates how infrastructure changes can move through CI validation
 ## Verified Locally
 
 ```bash
+python -m pip install -r requirements-dev.txt
 python -m unittest discover -s tests
 python scripts/render_plan_comment.py --sample
-python scripts/validate_gitops_layout.py --env dev
+python scripts/validate_gitops_layout.py --env all
 terraform fmt -recursive -check terraform
 ```
 
@@ -19,6 +20,7 @@ Sample plan-comment output:
 | Action | Count |
 | --- | ---: |
 | Create | 1 |
+| Read | 0 |
 | Update | 1 |
 | Delete | 1 |
 | Replace | 0 |
@@ -35,7 +37,7 @@ Sample plan-comment output:
 | Policies | `policies/opa/terraform.rego` | Policy-as-code guardrail examples. |
 | GitOps overlays | `kubernetes/overlays/` | Environment promotion through Kustomize. |
 | Argo CD apps | `argocd/applications/` | GitOps reconciliation per environment. |
-| Local demo | `scripts/validate_gitops_layout.py` | No-cloud validation of Terraform, Kustomize and Argo CD wiring. |
+| Local demo | `scripts/validate_gitops_layout.py` | Parsed YAML routing checks across all environments, including the production manual-sync boundary. |
 
 ## Screenshots And Proof To Capture
 
